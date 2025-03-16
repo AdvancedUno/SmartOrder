@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: order-service-config
+  namespace: smartorder-backend
+data:
+  MySqlConnection: "Server=mysql-service-headless;Database=db;User=myuser;Password=mypassword;"
+

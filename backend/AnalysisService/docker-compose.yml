@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  analysis-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        FOUNDRY_TOKEN: "${FOUNDRY_TOKEN}"
+    image: analysis-service:latest
+    container_name: analysis-service
+    ports:
+      - "5001:5001"
+    environment:
+      PALANTIR_ENDPOINT: 

@@ -1,0 +1,50 @@
+version: "3.9"
+
+services:
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: unopassword
+      MYSQL_DATABASE: OrderDb
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: unopassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./init-sql/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+
+  # Analysis Service
+  analysis-service:
+    build:
+      context: ./AnalysisService   
+      dockerfile: Dockerfile
+      args:
+        FOUNDRY_TOKEN: "${FOUNDRY_TOKEN}"
+    image: analysis-service:latest
+    container_name: analysis-service
+    ports:
+      - "5001:5001"
+    environment:
+      PALANTIR_ENDPOINT: 
+
+
+  # Order Service
+  order-service:
+    build:
+      context: ./OrderService    
+      dockerfile: Dockerfile
+    container_name: order-service
+    depends_on:
+      - mysql-db
+      - analysis-service
+    ports:
+      - "8080:8080"
+    environment:
+      ConnectionStrings__MySqlConnection: "Server=mysql-db;Port=3306;Database=OrderDb;User=myuser;Password=unopassword;"
+      AnalysisServiceUrl: "http://analysis-service:5001"
+      NotificationServiceUrl: "http://notificationservice:5002"
+
+volumes:
+  db_data:

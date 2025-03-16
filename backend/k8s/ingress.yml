@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: smartorder-backend-ingress
+  namespace: smartorder-backend
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: unolee.com
+      http:
+        paths:
+          - path: /api/orders
+            pathType: Prefix
+            backend:
+              service:
+                name: order-service
+                port:
+                  number: 80
