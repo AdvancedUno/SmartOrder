@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: analysis-service-deployment
+  namespace: smartorder-backend
+  labels:
+    app: analysis-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: analysis-service
+  template:
+    metadata:
+      labels:
+        app: analysis-service
+    spec:
+      containers:
+        - name: analysis-service-container
+          image: advanceduno/analysisservice:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5001  
+            - containerPort: 442   

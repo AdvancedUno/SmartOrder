@@ -1,0 +1,73 @@
+# apiVersion: apps/v1
+# kind: StatefulSet
+# metadata:
+#   name: mysql-service-headless
+#   namespace: smartorder-backend
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: mysql-service
+#   serviceName: mysql-service-headless
+#   template:
+#     metadata:
+#       labels:
+#         app: mysql-service
+#     spec:
+#       containers:
+#         - name: mysql
+#           image: mysql:8.0
+#           ports:
+#             - containerPort: 3306
+#           env:
+#             - name: MYSQL_DATABASE
+#               value: "db"
+#             - name: MYSQL_USER
+#               valueFrom:
+#                 secretKeyRef:
+#                   name: mysql-service-secret
+#                   key: user
+#             - name: MYSQL_PASSWORD
+#               valueFrom:
+#                 secretKeyRef:
+#                   name: mysql-service-secret
+#                   key: password
+#             - name: MYSQL_ROOT_PASSWORD
+#               valueFrom:
+#                 secretKeyRef:
+#                   name: mysql-service-secret
+#                   key: root-password
+#           volumeMounts:
+#             - name: mysql-persistent-storage
+#               mountPath: /var/lib/mysql
+#       volumes:
+#       - name: mysql-persistent-storage
+#         persistentVolumeClaim:
+#           claimName: mysql-pv-claim
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysql-pv-volume
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
