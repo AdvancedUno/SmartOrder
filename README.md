@@ -126,13 +126,4 @@ Frontend will be available at `http://localhost:3000`
 - ✅ Implement **real user authentication** (currently mocked).
 - ✅ Expand **store selection** and **price matching accuracy**.
 
----
-
-
-Feel free to contribute! Fork this repository and submit a pull request. 🚀
-
----
-
-## 📜 License
-This project is licensed under the **MIT License**.
 
