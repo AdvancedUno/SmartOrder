@@ -18,12 +18,7 @@ Smart Order is a web application that allows users to order groceries online fro
 
 ![image](https://github.com/user-attachments/assets/c9e62543-a0c9-406f-bf9e-6f57a2c59040)
 
-![image](https://github.com/user-attachments/assets/9222522c-b1b0-4a84-b2ac-dd504ad96fbc)
 
-![image](https://github.com/user-attachments/assets/51f9bff6-17bb-418a-8aed-e46d62865c29)
-
-
-![image](https://github.com/user-attachments/assets/bccc8884-6dd3-442f-a443-03a8afb53339)
 
 
 
